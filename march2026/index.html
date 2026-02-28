@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sivunigunta Family Trip — March 2026</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #f0f4f8;
+    color: #1a202c;
+    padding: 24px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 4px;
+    letter-spacing: -0.5px;
+  }
+  .subtitle {
+    text-align: center;
+    color: #64748b;
+    font-size: 14px;
+    margin-bottom: 28px;
+  }
+
+  /* LEGEND */
+  .legend {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 28px;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: #374151;
+  }
+  .legend-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+  }
+
+  /* CALENDAR GRID */
+  .calendar-wrap {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    overflow: hidden;
+    margin-bottom: 32px;
+  }
+  .cal-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: #1e293b;
+    color: white;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .cal-header div { padding: 10px 4px; }
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-left: 1px solid #e2e8f0;
+    border-top: 1px solid #e2e8f0;
+  }
+  .cal-cell {
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    min-height: 100px;
+    padding: 8px;
+    position: relative;
+    background: white;
+    transition: background 0.15s;
+  }
+  .cal-cell.empty { background: #f8fafc; }
+  .cal-cell.today { background: #fffbeb; }
+  .day-num {
+    font-size: 14px;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 5px;
+  }
+  .cal-cell.empty .day-num { color: #cbd5e1; }
+
+  .event {
+    border-radius: 5px;
+    padding: 3px 6px;
+    font-size: 10.5px;
+    font-weight: 600;
+    margin-bottom: 3px;
+    line-height: 1.3;
+    white-space: pre-wrap;
+  }
+  .ev-flight    { background: #dbeafe; color: #1d4ed8; }
+  .ev-hotel     { background: #dcfce7; color: #15803d; }
+  .ev-transit   { background: #fef3c7; color: #92400e; }
+  .ev-missing   { background: #fee2e2; color: #b91c1c; border: 1px dashed #f87171; }
+  .ev-tbd       { background: #f3e8ff; color: #7c3aed; border: 1px dashed #c084fc; }
+  .ev-india     { background: #fce7f3; color: #9d174d; }
+
+  /* TIMELINE */
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1a202c;
+    margin-bottom: 16px;
+    padding-left: 4px;
+    border-left: 4px solid #3b82f6;
+    padding-left: 12px;
+  }
+  .timeline { display: flex; flex-direction: column; gap: 0; }
+  .tl-row {
+    display: grid;
+    grid-template-columns: 80px 24px 1fr;
+    gap: 0 12px;
+    align-items: stretch;
+  }
+  .tl-date {
+    text-align: right;
+    padding-top: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    line-height: 1.2;
+  }
+  .tl-date .dow { font-size: 10px; font-weight: 500; color: #94a3b8; display: block; }
+  .tl-spine {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .tl-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    margin-top: 14px;
+    flex-shrink: 0;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px currentColor;
+  }
+  .tl-line {
+    width: 2px;
+    flex: 1;
+    background: #e2e8f0;
+    margin-top: 2px;
+  }
+  .tl-card {
+    background: white;
+    border-radius: 10px;
+    padding: 12px 16px;
+    margin: 6px 0;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    border-left: 4px solid transparent;
+  }
+  .tl-card.flight    { border-color: #3b82f6; }
+  .tl-card.hotel     { border-color: #22c55e; }
+  .tl-card.transit   { border-color: #f59e0b; }
+  .tl-card.missing   { border-color: #ef4444; background: #fff8f8; }
+  .tl-card.tbd       { border-color: #a855f7; background: #fdf8ff; }
+  .tl-card.india     { border-color: #ec4899; }
+
+  .tl-card .card-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  .tl-card .card-detail {
+    font-size: 12px;
+    color: #64748b;
+    margin-bottom: 1px;
+  }
+  .tl-card .card-conf {
+    font-size: 11px;
+    color: #94a3b8;
+    margin-top: 4px;
+    font-family: monospace;
+  }
+  .badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 20px;
+    margin-top: 4px;
+    letter-spacing: 0.3px;
+  }
+  .badge-booked   { background: #dcfce7; color: #15803d; }
+  .badge-missing  { background: #fee2e2; color: #b91c1c; }
+  .badge-tbd      { background: #f3e8ff; color: #7c3aed; }
+  .badge-paid     { background: #dbeafe; color: #1d4ed8; }
+  .badge-warning  { background: #fef3c7; color: #92400e; }
+
+  .alert-box {
+    background: #fff7ed;
+    border: 1px solid #fed7aa;
+    border-radius: 10px;
+    padding: 14px 18px;
+    margin-bottom: 24px;
+    font-size: 13px;
+    color: #9a3412;
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+  }
+  .alert-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+
+  .cost-table {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    overflow: hidden;
+    margin-top: 32px;
+  }
+  .cost-table table { width: 100%; border-collapse: collapse; }
+  .cost-table th {
+    background: #1e293b;
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .cost-table td {
+    padding: 10px 16px;
+    font-size: 13px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+  .cost-table tr:last-child td { border-bottom: none; }
+  .cost-table tr.total td { font-weight: 700; background: #f8fafc; }
+  .cost-table td:last-child { text-align: right; font-family: monospace; }
+
+  @media (max-width: 600px) {
+    .tl-row { grid-template-columns: 60px 20px 1fr; }
+    .cal-cell { min-height: 70px; }
+    .event { font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+
+<h1>✈️ Sivunigunta Family Trip — March 2026</h1>
+<p class="subtitle">Satya · Carmen · Natalia &nbsp;|&nbsp; PHX → Seoul → Beijing → Shanghai → Guangzhou → HK → India → PHX</p>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:#dbeafe;border:1px solid #93c5fd"></div> Flight (booked)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#dcfce7;border:1px solid #86efac"></div> Hotel (booked)</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fef3c7;border:1px solid #fcd34d"></div> Transit / ground</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fee2e2;border:1px dashed #f87171"></div> ⚠ NOT booked</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#f3e8ff;border:1px dashed #c084fc"></div> TBD / open question</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#fce7f3;border:1px solid #f9a8d4"></div> India leg</div>
+</div>
+
+<!-- ALERT -->
+<div class="alert-box">
+  <span class="alert-icon">⚠️</span>
+  <span><strong>Timing alert — Seoul Mar 8:</strong> Korean Air KE855 departs ICN at 11:10 AM. You must leave the Novotel by <strong>8:00–8:30 AM</strong> (not noon checkout). Arrange early departure with the hotel now.</span>
+</div>
+
+<!-- CALENDAR -->
+<div class="calendar-wrap">
+  <div class="cal-header">
+    <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+  </div>
+  <div class="cal-grid">
+
+    <!-- Week 1: Mar 1 starts on Sunday -->
+    <div class="cal-cell">
+      <div class="day-num">1</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">2</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">3</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">4</div>
+      <div class="event ev-flight">✈ PHX→SFO 8:05am<br>UA1372</div>
+      <div class="event ev-flight">✈ SFO→ICN 2:30pm<br>Air Premia YP112</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">5</div>
+      <div class="event ev-flight">🛬 Arrive Seoul 8:30pm</div>
+      <div class="event ev-hotel">🏨 Novotel Dongdaemun<br>Check-in</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">6</div>
+      <div class="event ev-hotel">🏨 Seoul</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">7</div>
+      <div class="event ev-hotel">🏨 Seoul</div>
+    </div>
+
+    <!-- Week 2 -->
+    <div class="cal-cell">
+      <div class="day-num">8</div>
+      <div class="event ev-transit" style="font-size:9.5px">⚠ Leave hotel by 8am!</div>
+      <div class="event ev-flight">✈ ICN→PEK 11:10am<br>Korean Air KE855 Biz</div>
+      <div class="event ev-hotel">🏨 Grand Hyatt Beijing<br>Check-in</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">9</div>
+      <div class="event ev-hotel">🏨 Beijing</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">10</div>
+      <div class="event ev-hotel">🏨 Beijing</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">11</div>
+      <div class="event ev-hotel">🏨 Beijing → checkout noon</div>
+      <div class="event ev-transit">🚄 High-speed train → Shanghai</div>
+      <div class="event ev-hotel">🏨 Pudong Shangri-La<br>Check-in 2pm</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">12</div>
+      <div class="event ev-hotel">🏨 Shanghai</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">13</div>
+      <div class="event ev-hotel">🏨 Shanghai</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">14</div>
+      <div class="event ev-hotel">🏨 Shanghai</div>
+    </div>
+
+    <!-- Week 3 -->
+    <div class="cal-cell">
+      <div class="day-num">15</div>
+      <div class="event ev-hotel">🏨 Shanghai</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">16</div>
+      <div class="event ev-hotel">🏨 Shanghai → checkout noon</div>
+      <div class="event ev-missing">⚠ Train → Guangzhou<br>NOT BOOKED</div>
+      <div class="event ev-missing">⚠ Guangzhou hotel<br>NOT BOOKED</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">17</div>
+      <div class="event ev-missing">⚠ Guangzhou</div>
+      <div class="event ev-tbd">🧵 Prototype work<br>(Carmen)</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">18</div>
+      <div class="event ev-missing">⚠ Guangzhou</div>
+      <div class="event ev-tbd">📅 Decide: extend or leave?</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">19</div>
+      <div class="event ev-missing">⚠ Guangzhou</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">20</div>
+      <div class="event ev-transit">🚕 Guangzhou → HK (taxi)</div>
+      <div class="event ev-flight">✈ HKG→Chennai 9:20pm<br>Cathay CX641 PremEco</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">21</div>
+      <div class="event ev-india">🛬 Arrive Chennai 12:35am</div>
+      <div class="event ev-tbd">🏨 Chennai TBD<br>(1–2 nights)</div>
+    </div>
+
+    <!-- Week 4 -->
+    <div class="cal-cell">
+      <div class="day-num">22</div>
+      <div class="event ev-tbd">📍 Chennai or<br>Tirupathi (TBD)</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">23</div>
+      <div class="event ev-tbd">🙏 Tirupathi TBD<br>(VIP darshan?)</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">24</div>
+      <div class="event ev-india">✈ → Guntur</div>
+      <div class="event ev-tbd">🏠 Guntur family<br>(TBD)</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">25</div>
+      <div class="event ev-tbd">🏠 Guntur</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">26</div>
+      <div class="event ev-tbd">🏠 Guntur</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">27</div>
+      <div class="event ev-india" style="background:#fce7f3">🚗 → Hyderabad</div>
+      <div class="event ev-transit" style="font-size:9.5px">⚠ Must arrive HYD by evening!</div>
+    </div>
+    <div class="cal-cell">
+      <div class="day-num">28</div>
+      <div class="event ev-flight">✈ HYD→HKG 1:55am<br>Cathay CX672 Biz</div>
+      <div class="event ev-flight">✈ HKG→LAX 12:35pm<br>Cathay CX884 Biz</div>
+      <div class="event ev-flight">✈ LAX→PHX 12:59pm<br>AA 7587</div>
+      <div class="event ev-hotel" style="background:#d1fae5">🏠 Home 2:34pm!</div>
+    </div>
+
+    <!-- Fill remaining -->
+    <div class="cal-cell empty"><div class="day-num">29</div></div>
+    <div class="cal-cell empty"><div class="day-num">30</div></div>
+    <div class="cal-cell empty"><div class="day-num">31</div></div>
+    <div class="cal-cell empty"></div>
+    <div class="cal-cell empty"></div>
+    <div class="cal-cell empty"></div>
+    <div class="cal-cell empty"></div>
+  </div>
+</div>
+
+<!-- COST SUMMARY -->
+<div class="section-title" style="margin-top:0">💰 Confirmed Spend (Paid)</div>
+<div class="cost-table">
+  <table>
+    <thead>
+      <tr><th>Item</th><th>Confirmation</th><th>Status</th><th>Amount</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>PHX→SFO · United UA1372</td>
+        <td style="font-size:11px;color:#94a3b8">AWFWW5</td>
+        <td><span class="badge badge-paid">PAID (miles)</span></td>
+        <td>33,900 mi + $114</td>
+      </tr>
+      <tr>
+        <td>SFO→Seoul · Air Premia YP112 (Biz row 1)</td>
+        <td style="font-size:11px;color:#94a3b8">S8UBTG</td>
+        <td><span class="badge badge-paid">PAID</span></td>
+        <td>$2,794</td>
+      </tr>
+      <tr>
+        <td>Seoul · Novotel Dongdaemun (3 nts)</td>
+        <td style="font-size:11px;color:#94a3b8">A5U6AC40616</td>
+        <td><span class="badge badge-paid">PAID · Non-refund</span></td>
+        <td>$983</td>
+      </tr>
+      <tr>
+        <td>Seoul→Beijing · Korean Air KE855 Biz</td>
+        <td style="font-size:11px;color:#94a3b8">A9RGKF</td>
+        <td><span class="badge badge-paid">PAID</span></td>
+        <td>$953</td>
+      </tr>
+      <tr>
+        <td>Beijing · Grand Hyatt (3 nts, 2 adults + child)</td>
+        <td style="font-size:11px;color:#94a3b8">#62895765</td>
+        <td><span class="badge badge-missing">NON-REFUNDABLE</span></td>
+        <td>~CNY 4,900 + tax</td>
+      </tr>
+      <tr>
+        <td>Shanghai · Pudong Shangri-La (5 nts, 2 rooms)</td>
+        <td style="font-size:11px;color:#94a3b8">20125SG359683/84</td>
+        <td><span class="badge badge-warning">PAY AT PROPERTY</span></td>
+        <td>CNY 18,895</td>
+      </tr>
+      <tr>
+        <td>HKG→Chennai · Cathay CX641 Prem Economy</td>
+        <td style="font-size:11px;color:#94a3b8">EWFSER</td>
+        <td><span class="badge badge-paid">PAID · Free change</span></td>
+        <td>HKD 14,993</td>
+      </tr>
+      <tr>
+        <td>HYD→HKG→LAX→PHX · Cathay Biz (return)</td>
+        <td style="font-size:11px;color:#94a3b8">A9CRGG</td>
+        <td><span class="badge badge-paid">PAID</span></td>
+        <td>$7,910</td>
+      </tr>
+      <tr class="total">
+        <td colspan="3">Total USD confirmed spend (approx)</td>
+        <td>~$13,800 USD</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- GAPS -->
+<div class="section-title" style="margin-top:28px">🔴 Open Items — Action Required</div>
+<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:32px;">
+  <div class="tl-card missing">
+    <div class="card-title">⚠ Guangzhou Hotel — Mar 16–20 (4 nights)</div>
+    <div class="card-detail">Nothing booked. Suggest: Ritz-Carlton Guangzhou or Four Points Sheraton near leather district.</div>
+    <span class="badge badge-missing">NOT BOOKED</span>
+  </div>
+  <div class="tl-card missing">
+    <div class="card-title">⚠ Shanghai → Guangzhou Train — Mar 16</div>
+    <div class="card-detail">High-speed G-train, Shanghai Hongqiao → Guangzhou South, ~5.5 hrs. Book on Trip.com now.</div>
+    <span class="badge badge-missing">NOT BOOKED</span>
+  </div>
+  <div class="tl-card tbd">
+    <div class="card-title">? Guangzhou extension — Carmen stays / all stay?</div>
+    <div class="card-detail">Decision needed by Mar 18 once prototype work is assessed. If Carmen extends, change CX641 (free).</div>
+    <span class="badge badge-tbd">OPEN QUESTION</span>
+  </div>
+  <div class="tl-card tbd">
+    <div class="card-title">? Tirupathi VIP darshan — whole family or Satya alone?</div>
+    <div class="card-detail">Confirm TTD VIP quota. If secured → bring all 3. If not → Satya solo, Carmen + Natalia go to Guntur.</div>
+    <span class="badge badge-tbd">OPEN QUESTION</span>
+  </div>
+  <div class="tl-card missing">
+    <div class="card-title">⚠ Chennai → Tirupathi → Guntur transport</div>
+    <div class="card-detail">No flights/trains booked. Book IndiGo/Air India Chennai→Tirupathi or Chennai→Vijayawada (closest to Guntur).</div>
+    <span class="badge badge-missing">NOT BOOKED</span>
+  </div>
+  <div class="tl-card missing">
+    <div class="card-title">⚠ India accommodations (Mar 21–27)</div>
+    <div class="card-detail">Chennai hotel (1–2 nts), Tirupathi if overnight, Guntur (family or hotel), Hyderabad night of Mar 27.</div>
+    <span class="badge badge-missing">NOT BOOKED</span>
+  </div>
+  <div class="tl-card transit" style="border-color:#f59e0b">
+    <div class="card-title">⚠ Seoul departure timing — URGENT</div>
+    <div class="card-detail">KE855 departs ICN 11:10 AM on Mar 8. Must leave Novotel by 8:00–8:30 AM. Call hotel to arrange early departure.</div>
+    <span class="badge badge-warning">ACTION NOW</span>
+  </div>
+</div>
+
+<div style="text-align:center;color:#94a3b8;font-size:12px;margin-top:8px;">
+  Generated Feb 28, 2026 · Sivunigunta Family Trip · All times local
+</div>
+
+</body>
+</html>
