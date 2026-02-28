@@ -627,15 +627,6 @@ const messages = [
   "You've found the secret: there is no secret."
 ];
 
-document.getElementById('heroImg').addEventListener('click', function() {
-  const msg = document.getElementById('gameMessage');
-  msg.textContent = messages[clickCount % messages.length];
-  msg.style.color = `hsl(${clickCount * 37 % 360}, 100%, 70%)`;
-  clickCount++;
-
-  this.style.transform = `rotate(${(Math.random() - 0.5) * 20}deg)`;
-  setTimeout(() => { this.style.transform = ''; }, 300);
-});
 
 // ========== MAZE GAME ==========
 const MAZE_SIZE = 9;
