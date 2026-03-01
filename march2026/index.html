@@ -110,6 +110,55 @@
   .ev-missing   { background: #fee2e2; color: #b91c1c; border: 1px dashed #f87171; }
   .ev-tbd       { background: #f3e8ff; color: #7c3aed; border: 1px dashed #c084fc; }
   .ev-india     { background: #fce7f3; color: #9d174d; }
+  /* SEOUL-REC tag — find/edit all with data-tag="SEOUL-REC" */
+  .ev-rec       { background: #ccfbf1; color: #0f766e; border: 1px solid #5eead4; }
+
+  /* Recommendation cards */
+  .rec-section-title {
+    font-size: 18px; font-weight: 700; color: #0f766e;
+    margin-bottom: 16px; padding-left: 12px;
+    border-left: 4px solid #14b8a6;
+  }
+  .rec-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+  .rec-card {
+    background: white;
+    border-radius: 12px;
+    padding: 14px 16px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.07);
+    border-left: 4px solid #14b8a6;
+  }
+  .rec-card .rec-day {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
+    text-transform: uppercase; color: #14b8a6; margin-bottom: 4px;
+  }
+  .rec-card .rec-title {
+    font-size: 14px; font-weight: 700; color: #1a202c; margin-bottom: 8px;
+  }
+  .rec-card .rec-item {
+    font-size: 12px; color: #374151;
+    padding: 5px 0; border-bottom: 1px solid #f1f5f9;
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+  .rec-card .rec-item:last-child { border-bottom: none; }
+  .rec-card .rec-item .who {
+    font-size: 10px; font-weight: 700; padding: 1px 6px;
+    border-radius: 10px; white-space: nowrap; flex-shrink: 0; margin-top: 1px;
+  }
+  .who-all      { background: #e0f2fe; color: #0369a1; }
+  .who-natalia  { background: #fae8ff; color: #7e22ce; }
+  .who-carmen   { background: #fce7f3; color: #9d174d; }
+  .who-satya    { background: #fef9c3; color: #713f12; }
+  .rec-tag-badge {
+    display: inline-block; font-size: 9px; font-weight: 700;
+    background: #ccfbf1; color: #0f766e; border: 1px solid #5eead4;
+    padding: 1px 7px; border-radius: 10px; margin-top: 6px;
+    letter-spacing: 0.4px;
+  }
 
   /* TIMELINE */
   .section-title {
@@ -263,6 +312,7 @@
   <div class="legend-item"><div class="legend-dot" style="background:#fee2e2;border:1px dashed #f87171"></div> ⚠ NOT booked</div>
   <div class="legend-item"><div class="legend-dot" style="background:#f3e8ff;border:1px dashed #c084fc"></div> TBD / open question</div>
   <div class="legend-item"><div class="legend-dot" style="background:#fce7f3;border:1px solid #f9a8d4"></div> India leg</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#ccfbf1;border:1px solid #5eead4"></div> 🗺 Recommendation</div>
 </div>
 
 <!-- ALERT -->
@@ -295,16 +345,19 @@
     </div>
     <div class="cal-cell">
       <div class="day-num">5</div>
-      <div class="event ev-flight">🛬 Arrive Seoul 8:30pm</div>
+      <div class="event ev-flight">🛬 Arrive Seoul ~7pm</div>
       <div class="event ev-hotel">🏨 Novotel Dongdaemun<br>Check-in</div>
+      <div class="event ev-rec" data-tag="SEOUL-REC">🗺 Light dinner + rest</div>
     </div>
     <div class="cal-cell">
       <div class="day-num">6</div>
       <div class="event ev-hotel">🏨 Seoul</div>
+      <div class="event ev-rec" data-tag="SEOUL-REC">🗺 Palace + Myeongdong</div>
     </div>
     <div class="cal-cell">
       <div class="day-num">7</div>
       <div class="event ev-hotel">🏨 Seoul</div>
+      <div class="event ev-rec" data-tag="SEOUL-REC">🗺 Hongdae + COEX</div>
     </div>
 
     <!-- Week 2 -->
@@ -420,6 +473,136 @@
     <div class="cal-cell empty"></div>
     <div class="cal-cell empty"></div>
     <div class="cal-cell empty"></div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- SEOUL RECOMMENDATIONS  •  find/edit all: data-tag="SEOUL-REC" -->
+<!-- ============================================================ -->
+<div id="seoul-recs">
+  <p class="rec-section-title">🗺️ Seoul Recommendations <span style="font-size:12px;font-weight:500;color:#94a3b8;">Mar 5–8 · tag: SEOUL-REC</span></p>
+  <div class="rec-grid">
+
+    <!-- MAR 5 -->
+    <div class="rec-card" id="rec-seoul-mar5" data-tag="SEOUL-REC">
+      <div class="rec-day">Mar 5 · Wednesday · Arrival Night</div>
+      <div class="rec-title">🛬 Arrive ~7 PM — Recovery Night</div>
+      <div class="rec-item">
+        <span class="who who-all">ALL</span>
+        <span>Check in Novotel Dongdaemun. Short walk to Dongdaemun Design Plaza (DDP) — lit up at night, zero effort, great intro to Seoul.</span>
+      </div>
+      <div class="rec-item">
+        <span class="who who-satya">SATYA</span>
+        <span><strong>Dinner:</strong> Sundubu jjigae (soft tofu soup) or doenjang jjigae nearby. Small protein-forward portions — ideal for GLP-1 first night. Avoid fried chicken night one.</span>
+      </div>
+      <div class="rec-item">
+        <span class="who who-all">ALL</span>
+        <span>Early bed. Seoul is +17hrs from PHX — jet lag hits hard on day 1.</span>
+      </div>
+      <span class="rec-tag-badge">SEOUL-REC</span>
+    </div>
+
+    <!-- MAR 6 -->
+    <div class="rec-card" id="rec-seoul-mar6" data-tag="SEOUL-REC">
+      <div class="rec-day">Mar 6 · Thursday · Culture + Beauty Day</div>
+      <div class="rec-title">🏯 Gyeongbokgung → Bukchon → Myeongdong</div>
+      <div class="rec-item">
+        <span class="who who-all">ALL</span>
+        <span><strong>Morning:</strong> Gyeongbokgung Palace (opens 9 AM, ₩3,000). Rent hanboks at the gate for photos — Natalia will love it.</span>
+      </div>
+      <div class="rec-item">
+        <span class="who who-all">ALL</span>
+        <span><strong>Late morning:</strong> Walk Bukchon Hanok Village — traditional tile-roof alleyways, 15 min from palace.</span>
+      </div>
+      <div class="rec-item">
+        <span class="who who-carmen">CARMEN</span>
+        <span><strong>Afternoon — Myeongdong:</strong> Olive Young (flagship), Innisfree, Etude House, Laneige, COSRX, Sulwhasoo all within 2 blocks. Prices 30–50% cheaper than US.</span>
+      </div>
+      <div class="rec-item">
+        <span class="who who-natalia">NATALIA</span>
+        <span>Myeongdong underground mall + street stalls. K-pop albums, character goods, indie accessories.</span>
+      </div>
+      <div class="rec-item">
+        <span class="who who-satya">SATYA</span>
+        <span><strong>Dinner Myeongdong:</strong> Galbi (short ribs) or samgyeopsal restaurant — eat 2–3 pieces of grilled meat with banchan spread. Skip rice or eat ¼ portion. High protein, GLP-1 friendly.</span>
+      </div>
+      <span class="rec-tag-badge">SEOUL-REC</span>
+    </div>
+
+    <!-- MAR 7 -->
+    <div class="rec-card" id="rec-seoul-mar7" data-tag="SEOUL-REC">
+      <div class="rec-day">Mar 7 · Friday · Anime + Gangnam Day</div>
+      <div class="rec-title">🎌 Hongdae → COEX Mall → Gangnam Dinner</div>
+      <div class="rec-item">
+        <span class="who who-natalia">NATALIA</span>
+        <span><strong>Hongdae (all morning):</strong> Seoul's anime/manga hub — Animeta store, multiple doujinshi shops, indie K-pop merch, manhwa bang (manga cafes). She could spend the full day here.</span>
+      </div>
+      <div class="rec-item">
+        <span class="who who-carmen">CARMEN</span>
+        <span>Hongdae indie beauty boutiques — Korean brands not found in Myeongdong (Tamburins, Aestura, local indie labels).</span>
+      </div>
+      <div class="rec-item">
+        <span class="who who-all">ALL</span>
+        <span><strong>Afternoon — COEX Mall, Gangnam:</strong> Starfield Library (landmark atrium bookstore). Bandi &amp; Luni's has dedicated manga/manhwa floors for Natalia.</span>
+      </div>
+      <div class="rec-item">
+        <span class="who who-satya">SATYA</span>
+        <span><strong>Dinner Gangnam:</strong> Hanjeongsik (Korean multi-course set) — many small dishes, eat what you want, leave the rest. Best GLP-1 format in Korean cuisine. Or upscale galbi restaurants here.</span>
+      </div>
+      <span class="rec-tag-badge">SEOUL-REC</span>
+    </div>
+
+    <!-- MAR 8 MORNING -->
+    <div class="rec-card" id="rec-seoul-mar8" data-tag="SEOUL-REC">
+      <div class="rec-day">Mar 8 · Saturday · Airport Morning ⚠</div>
+      <div class="rec-title">✈ Leave Hotel 7:45 AM → ICN KE855 11:10 AM</div>
+      <div class="rec-item">
+        <span class="who who-all">ALL</span>
+        <span>Settle hotel bill the night before (Mar 7 evening). Store bags at front desk if needed.</span>
+      </div>
+      <div class="rec-item">
+        <span class="who who-all">ALL</span>
+        <span>AREX Express train: Seoul Station → ICN T2, ~43 min, ₩9,500/person. Leaves Seoul Station ~8:15 AM to arrive ICN by 9 AM.</span>
+      </div>
+      <div class="rec-item">
+        <span class="who who-satya">SATYA</span>
+        <span>Light hotel breakfast only. Avoid airport food before long flight — GLP-1 + altitude + food = uncomfortable. Eat small on the plane instead.</span>
+      </div>
+      <div class="rec-item">
+        <span class="who who-natalia">NATALIA</span>
+        <span>ICN Duty Free has a large anime/character goods section airside — small buffer time for a quick browse after check-in.</span>
+      </div>
+      <span class="rec-tag-badge">SEOUL-REC</span>
+    </div>
+
+  </div>
+
+  <!-- GLP-1 FOOD CARD -->
+  <div class="rec-card" id="rec-seoul-food" data-tag="SEOUL-REC" style="margin-bottom:32px;border-color:#f59e0b;max-width:100%">
+    <div class="rec-day" style="color:#b45309">GLP-1 Seoul Cheat Sheet · Satya</div>
+    <div class="rec-title">🍽 What to Eat &amp; Avoid in Seoul</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:4px;">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#15803d;margin-bottom:6px;">✅ GO FOR</div>
+        <div class="rec-item" style="border:none;padding:2px 0;font-size:12px;">Sundubu / doenjang jjigae (soups)</div>
+        <div class="rec-item" style="border:none;padding:2px 0;font-size:12px;">Galbi, samgyeopsal (grilled meat — eat 2–3 pieces)</div>
+        <div class="rec-item" style="border:none;padding:2px 0;font-size:12px;">Banchan spread (many small dishes)</div>
+        <div class="rec-item" style="border:none;padding:2px 0;font-size:12px;">Bibimbap (eat ½ the rice)</div>
+        <div class="rec-item" style="border:none;padding:2px 0;font-size:12px;">Japchae (glass noodles, small portion)</div>
+        <div class="rec-item" style="border:none;padding:2px 0;font-size:12px;">Hanjeongsik multi-course set</div>
+        <div class="rec-item" style="border:none;padding:2px 0;font-size:12px;">Grilled fish</div>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;color:#b91c1c;margin-bottom:6px;">❌ AVOID</div>
+        <div class="rec-item" style="border:none;padding:2px 0;font-size:12px;">Full Korean fried chicken serving</div>
+        <div class="rec-item" style="border:none;padding:2px 0;font-size:12px;">Pajeon (oily scallion pancakes)</div>
+        <div class="rec-item" style="border:none;padding:2px 0;font-size:12px;">Bingsu (sugar bomb)</div>
+        <div class="rec-item" style="border:none;padding:2px 0;font-size:12px;">Large naengmyeon portions</div>
+        <div class="rec-item" style="border:none;padding:2px 0;font-size:12px;">Full rice bowl meals</div>
+        <div class="rec-item" style="border:none;padding:2px 0;font-size:12px;">Airport food before long-haul flight</div>
+      </div>
+    </div>
+    <span class="rec-tag-badge">SEOUL-REC</span>
   </div>
 </div>
 
