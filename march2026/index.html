@@ -434,7 +434,7 @@
     <h2>🏠 Pre-Trip Checklist</h2>
     <div class="checklist-progress-wrap">
       <div class="checklist-progress-bar"><div class="checklist-progress-fill" id="clProgressFill" style="width:0%"></div></div>
-      <span class="checklist-progress-label" id="clProgressLabel">0 / 18 done</span>
+      <span class="checklist-progress-label" id="clProgressLabel">Loading…</span>
     </div>
   </div>
   <div class="checklist-grid">
@@ -1185,16 +1185,12 @@
 </div>
 
 <script>
-  // Pre-trip checklist — interactive with localStorage persistence
-  const STORAGE_KEY = 'sivunigunta_checklist_2026';
+  // Pre-trip checklist — cross-device sync via JSONBlob cloud storage
+  const BLOB_ID = '019cb056-f4c1-7f7c-a842-2e8b65a09179';
+  const BLOB_URL = 'https://jsonblob.com/api/jsonBlob/' + BLOB_ID;
 
-  function getChecked() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { return {}; }
-  }
-
-  function saveChecked(state) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  }
+  let state = {};
+  let saveTimer = null;
 
   function updateProgress() {
     const items = document.querySelectorAll('.checklist-item[data-cl]');
@@ -1205,28 +1201,53 @@
     document.getElementById('clProgressLabel').textContent = done + ' / ' + total + ' done';
   }
 
-  function toggleCheck(el) {
-    const state = getChecked();
-    const key = el.dataset.cl;
-    if (el.classList.contains('done')) {
-      el.classList.remove('done');
-      delete state[key];
-    } else {
-      el.classList.add('done');
-      state[key] = true;
-    }
-    saveChecked(state);
+  function applyState() {
+    document.querySelectorAll('.checklist-item[data-cl]').forEach(el => {
+      el.classList.toggle('done', !!state[el.dataset.cl]);
+    });
     updateProgress();
   }
 
-  // Restore saved state on load
-  (function init() {
-    const state = getChecked();
-    Object.keys(state).forEach(key => {
-      const el = document.querySelector('[data-cl="' + key + '"]');
-      if (el) el.classList.add('done');
-    });
+  function saveState() {
+    // Debounce — wait 600ms after last click before saving to avoid hammering the API
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => {
+      fetch(BLOB_URL, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(state)
+      }).catch(() => {
+        // Silent fail — state is still correct in memory for this session
+      });
+    }, 600);
+  }
+
+  function toggleCheck(el) {
+    const key = el.dataset.cl;
+    if (state[key]) {
+      delete state[key];
+      el.classList.remove('done');
+    } else {
+      state[key] = true;
+      el.classList.add('done');
+    }
     updateProgress();
+    saveState();
+  }
+
+  // Load state from cloud on page open — works on any device
+  (function init() {
+    fetch(BLOB_URL, { headers: { 'Accept': 'application/json' } })
+      .then(r => r.json())
+      .then(data => {
+        state = data || {};
+        applyState();
+      })
+      .catch(() => {
+        // If cloud is unreachable, fall back to localStorage
+        try { state = JSON.parse(localStorage.getItem('cl_fallback') || '{}'); } catch(e) {}
+        applyState();
+      });
   })();
 </script>
 
