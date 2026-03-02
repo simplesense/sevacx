@@ -1185,18 +1185,20 @@
 </div>
 
 <script>
-  // Pre-trip checklist — cross-device sync via JSONBlob cloud storage
-  const BLOB_ID = '019cb056-f4c1-7f7c-a842-2e8b65a09179';
-  const BLOB_URL = 'https://jsonblob.com/api/jsonBlob/' + BLOB_ID;
+  // Pre-trip checklist — cross-device sync
+  // Writes to localStorage instantly (same-device, zero latency)
+  // Also syncs to Netlify function → private GitHub Gist (cross-device)
+  const API = '/.netlify/functions/checklist';
+  const LS_KEY = 'sivunigunta_checklist_2026';
 
   let state = {};
   let saveTimer = null;
 
   function updateProgress() {
     const items = document.querySelectorAll('.checklist-item[data-cl]');
-    const done = document.querySelectorAll('.checklist-item[data-cl].done').length;
+    const done  = document.querySelectorAll('.checklist-item[data-cl].done').length;
     const total = items.length;
-    const pct = total ? Math.round((done / total) * 100) : 0;
+    const pct   = total ? Math.round((done / total) * 100) : 0;
     document.getElementById('clProgressFill').style.width = pct + '%';
     document.getElementById('clProgressLabel').textContent = done + ' / ' + total + ' done';
   }
@@ -1208,46 +1210,46 @@
     updateProgress();
   }
 
-  function saveState() {
-    // Debounce — wait 600ms after last click before saving to avoid hammering the API
+  function saveToLocal() {
+    try { localStorage.setItem(LS_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  function saveToCloud() {
     clearTimeout(saveTimer);
     saveTimer = setTimeout(() => {
-      fetch(BLOB_URL, {
+      fetch(API, {
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify(state)
-      }).catch(() => {
-        // Silent fail — state is still correct in memory for this session
-      });
-    }, 600);
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(state),
+      }).catch(() => {/* silent — local copy is still valid */});
+    }, 700);
   }
 
   function toggleCheck(el) {
     const key = el.dataset.cl;
-    if (state[key]) {
-      delete state[key];
-      el.classList.remove('done');
-    } else {
-      state[key] = true;
-      el.classList.add('done');
-    }
+    if (state[key]) { delete state[key]; el.classList.remove('done'); }
+    else             { state[key] = true; el.classList.add('done'); }
     updateProgress();
-    saveState();
+    saveToLocal();   // instant, always works
+    saveToCloud();   // async cloud sync
   }
 
-  // Load state from cloud on page open — works on any device
+  // On load: show localStorage immediately (no flicker),
+  // then fetch cloud and merge in case another device changed something
   (function init() {
-    fetch(BLOB_URL, { headers: { 'Accept': 'application/json' } })
-      .then(r => r.json())
-      .then(data => {
-        state = data || {};
-        applyState();
+    try { state = JSON.parse(localStorage.getItem(LS_KEY) || '{}'); } catch(e) {}
+    applyState(); // render immediately from local
+
+    fetch(API)
+      .then(r => r.ok ? r.json() : null)
+      .then(cloud => {
+        if (cloud && typeof cloud === 'object') {
+          state = cloud;        // cloud is the source of truth
+          saveToLocal();        // keep local in sync
+          applyState();
+        }
       })
-      .catch(() => {
-        // If cloud is unreachable, fall back to localStorage
-        try { state = JSON.parse(localStorage.getItem('cl_fallback') || '{}'); } catch(e) {}
-        applyState();
-      });
+      .catch(() => {/* no cloud yet — local state is fine */});
   })();
 </script>
 
