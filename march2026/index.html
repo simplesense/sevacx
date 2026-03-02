@@ -297,12 +297,250 @@
     .cal-cell { min-height: 70px; }
     .event { font-size: 9px; }
   }
+
+  /* PRE-TRIP CHECKLIST */
+  .checklist-section {
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+    padding: 20px 24px 24px;
+    margin-bottom: 32px;
+  }
+  .checklist-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .checklist-header h2 {
+    font-size: 17px;
+    font-weight: 700;
+    color: #1a202c;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .checklist-progress-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .checklist-progress-bar {
+    width: 160px;
+    height: 8px;
+    background: #e2e8f0;
+    border-radius: 99px;
+    overflow: hidden;
+  }
+  .checklist-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #10b981, #14b8a6);
+    border-radius: 99px;
+    transition: width 0.3s ease;
+  }
+  .checklist-progress-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: #64748b;
+    white-space: nowrap;
+  }
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+  }
+  .checklist-group {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 12px 14px;
+    border: 1px solid #e2e8f0;
+  }
+  .checklist-group-title {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: #475569;
+    margin-bottom: 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e2e8f0;
+  }
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    padding: 5px 0;
+    cursor: pointer;
+    user-select: none;
+    border-radius: 6px;
+    transition: background 0.1s;
+  }
+  .checklist-item:hover { background: #f1f5f9; padding-left: 4px; }
+  .checklist-box {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 2px solid #cbd5e1;
+    flex-shrink: 0;
+    margin-top: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    transition: all 0.15s;
+    background: white;
+  }
+  .checklist-item.done .checklist-box {
+    background: #10b981;
+    border-color: #10b981;
+    color: white;
+  }
+  .checklist-item.done .checklist-text {
+    text-decoration: line-through;
+    color: #94a3b8;
+  }
+  .checklist-text {
+    font-size: 12.5px;
+    color: #374151;
+    line-height: 1.4;
+  }
+  .checklist-tag {
+    font-size: 10px;
+    font-weight: 700;
+    padding: 1px 6px;
+    border-radius: 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .tag-satya    { background: #fef9c3; color: #713f12; }
+  .tag-carmen   { background: #fce7f3; color: #9d174d; }
+  .tag-all      { background: #e0f2fe; color: #0369a1; }
 </style>
 </head>
 <body>
 
 <h1>✈️ Sivunigunta Family Trip — March 2026</h1>
 <p class="subtitle">Satya · Carmen · Natalia &nbsp;|&nbsp; PHX → Seoul → Beijing → Shanghai → Guangzhou → HK → India → PHX</p>
+
+<!-- ============================================================ -->
+<!-- PRE-TRIP CHECKLIST -->
+<!-- ============================================================ -->
+<div class="checklist-section">
+  <div class="checklist-header">
+    <h2>🏠 Pre-Trip Checklist</h2>
+    <div class="checklist-progress-wrap">
+      <div class="checklist-progress-bar"><div class="checklist-progress-fill" id="clProgressFill" style="width:0%"></div></div>
+      <span class="checklist-progress-label" id="clProgressLabel">0 / 18 done</span>
+    </div>
+  </div>
+  <div class="checklist-grid">
+
+    <!-- SECURITY CAMERAS -->
+    <div class="checklist-group">
+      <div class="checklist-group-title">🔒 Security Cameras</div>
+      <div class="checklist-item" data-cl="cl-cam-1" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Install 2 cameras — front of house</span>
+      </div>
+      <div class="checklist-item" data-cl="cl-cam-2" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Install driveway camera — next to backyard gate</span>
+      </div>
+      <div class="checklist-item" data-cl="cl-cam-3" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Change batteries — front door camera</span>
+      </div>
+      <div class="checklist-item" data-cl="cl-cam-4" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Install Blink camera — inside garage</span>
+      </div>
+      <div class="checklist-item" data-cl="cl-cam-5" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Install Blink camera — bedroom</span>
+      </div>
+      <div class="checklist-item" data-cl="cl-cam-6" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Install Blink camera — living room</span>
+      </div>
+      <div class="checklist-item" data-cl="cl-cam-7" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Install Blink camera — Natalia's room</span>
+      </div>
+      <div class="checklist-item" data-cl="cl-cam-8" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Install Blink camera — Carmen's office</span>
+      </div>
+    </div>
+
+    <!-- BANKING -->
+    <div class="checklist-group">
+      <div class="checklist-group-title">🏦 Banking</div>
+      <div class="checklist-item" data-cl="cl-bank-1" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Open Mercury bank account — personal &nbsp;<a href="https://mercury.com" target="_blank" onclick="event.stopPropagation()" style="color:#0369a1;font-size:11px">mercury.com</a></span>
+      </div>
+      <div class="checklist-item" data-cl="cl-bank-2" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Open Mercury bank account — Smart Imports LLC &nbsp;<a href="https://mercury.com" target="_blank" onclick="event.stopPropagation()" style="color:#0369a1;font-size:11px">mercury.com</a></span>
+      </div>
+    </div>
+
+    <!-- TRAVEL PREP -->
+    <div class="checklist-group">
+      <div class="checklist-group-title">🧳 Travel Prep</div>
+      <div class="checklist-item" data-cl="cl-travel-1" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Pack CPAP — portable unit</span>
+        <span class="checklist-tag tag-satya">SATYA</span>
+      </div>
+      <div class="checklist-item" data-cl="cl-travel-2" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Pack CPAP — full unit</span>
+        <span class="checklist-tag tag-satya">SATYA</span>
+      </div>
+      <div class="checklist-item" data-cl="cl-travel-3" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Get GLP-1 medication — Dr. Lamb</span>
+        <span class="checklist-tag tag-satya">SATYA</span>
+      </div>
+      <div class="checklist-item" data-cl="cl-travel-4" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Get medication — GynoFit (Carmen's dietary regiment)</span>
+        <span class="checklist-tag tag-carmen">CARMEN</span>
+      </div>
+    </div>
+
+    <!-- HOME HANDOFF -->
+    <div class="checklist-group">
+      <div class="checklist-group-title">🏠 Home Handoff</div>
+      <div class="checklist-item" data-cl="cl-home-1" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Give extra keys to Vicki or Ritu's family</span>
+      </div>
+      <div class="checklist-item" data-cl="cl-home-2" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Garage shuffle — fit all 3 cars inside before leaving</span>
+      </div>
+    </div>
+
+    <!-- ADMIN / FINANCE -->
+    <div class="checklist-group">
+      <div class="checklist-group-title">📋 Admin &amp; Finance</div>
+      <div class="checklist-item" data-cl="cl-tax-1" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Taxes — photograph &amp; file documents</span>
+      </div>
+      <div class="checklist-item" data-cl="cl-tax-2" onclick="toggleCheck(this)">
+        <div class="checklist-box">✓</div>
+        <span class="checklist-text">Taxes — drop off to Panda Accounting</span>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 <!-- LEGEND -->
 <div class="legend">
@@ -902,6 +1140,52 @@
 <div style="text-align:center;color:#94a3b8;font-size:12px;margin-top:8px;">
   Generated Feb 28, 2026 · Sivunigunta Family Trip · All times local
 </div>
+
+<script>
+  // Pre-trip checklist — interactive with localStorage persistence
+  const STORAGE_KEY = 'sivunigunta_checklist_2026';
+
+  function getChecked() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { return {}; }
+  }
+
+  function saveChecked(state) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }
+
+  function updateProgress() {
+    const items = document.querySelectorAll('.checklist-item[data-cl]');
+    const done = document.querySelectorAll('.checklist-item[data-cl].done').length;
+    const total = items.length;
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    document.getElementById('clProgressFill').style.width = pct + '%';
+    document.getElementById('clProgressLabel').textContent = done + ' / ' + total + ' done';
+  }
+
+  function toggleCheck(el) {
+    const state = getChecked();
+    const key = el.dataset.cl;
+    if (el.classList.contains('done')) {
+      el.classList.remove('done');
+      delete state[key];
+    } else {
+      el.classList.add('done');
+      state[key] = true;
+    }
+    saveChecked(state);
+    updateProgress();
+  }
+
+  // Restore saved state on load
+  (function init() {
+    const state = getChecked();
+    Object.keys(state).forEach(key => {
+      const el = document.querySelector('[data-cl="' + key + '"]');
+      if (el) el.classList.add('done');
+    });
+    updateProgress();
+  })();
+</script>
 
 </body>
 </html>
