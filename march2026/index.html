@@ -13,6 +13,32 @@
     padding: 24px;
   }
 
+  /* PASSWORD GATE */
+  #pw-gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 18px;
+  }
+  #pw-gate .pw-logo { font-size: 48px; }
+  #pw-gate h2 { color: #e2e8f0; font-size: 22px; font-weight: 600; letter-spacing: -0.3px; }
+  #pw-gate p { color: #94a3b8; font-size: 13px; }
+  #pw-gate .pw-row { display: flex; gap: 10px; }
+  #pw-gate input {
+    padding: 10px 16px; border-radius: 8px; border: 1px solid #334155;
+    background: #1e293b; color: #f1f5f9; font-size: 15px; width: 220px;
+    outline: none; transition: border 0.2s;
+  }
+  #pw-gate input:focus { border-color: #38bdf8; }
+  #pw-gate button {
+    padding: 10px 22px; border-radius: 8px; border: none;
+    background: #0ea5e9; color: white; font-weight: 600; font-size: 14px;
+    cursor: pointer; transition: background 0.2s;
+  }
+  #pw-gate button:hover { background: #0284c7; }
+  #pw-gate .pw-err { color: #f87171; font-size: 13px; min-height: 18px; }
+  #page-content { display: none; }
+
   h1 {
     text-align: center;
     font-size: 26px;
@@ -423,6 +449,19 @@
 </head>
 <body>
 
+<!-- PASSWORD GATE -->
+<div id="pw-gate">
+  <div class="pw-logo">✈️🔒</div>
+  <h2>Sivunigunta Family Trip</h2>
+  <p>Enter password to view the itinerary</p>
+  <div class="pw-row">
+    <input type="password" id="pw-input" placeholder="Password" autocomplete="off" autofocus>
+    <button onclick="checkPw()">Unlock</button>
+  </div>
+  <div class="pw-err" id="pw-err"></div>
+</div>
+
+<div id="page-content">
 <h1>✈️ Sivunigunta Family Trip — March 2026</h1>
 <p class="subtitle">Satya · Carmen · Natalia &nbsp;|&nbsp; PHX → Seoul → Beijing → Shanghai → Guangzhou → HK → India → PHX</p>
 
@@ -1579,6 +1618,44 @@
       })
       .catch(() => {/* no cloud yet — local state is fine */});
   })();
+</script>
+
+</div><!-- /page-content -->
+
+<script>
+// Password gate — SHA-256 hash comparison
+const PW_HASH = 'ae9216c417ccdfcf26c62173d7b7fe3d440044e400dde9b6bbc9c354aded8118';
+
+async function sha256(str) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function checkPw() {
+  const input = document.getElementById('pw-input').value;
+  const hash = await sha256(input);
+  if (hash === PW_HASH) {
+    sessionStorage.setItem('trip-auth', '1');
+    unlock();
+  } else {
+    document.getElementById('pw-err').textContent = 'Incorrect password';
+    document.getElementById('pw-input').value = '';
+    document.getElementById('pw-input').focus();
+  }
+}
+
+function unlock() {
+  document.getElementById('pw-gate').style.display = 'none';
+  document.getElementById('page-content').style.display = 'block';
+}
+
+// Auto-unlock if already authenticated this session
+if (sessionStorage.getItem('trip-auth') === '1') { unlock(); }
+
+// Enter key support
+document.getElementById('pw-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') checkPw();
+});
 </script>
 
 </body>
