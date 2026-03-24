@@ -445,6 +445,126 @@
   .tag-carmen   { background: #fce7f3; color: #9d174d; }
   .tag-natalia  { background: #fae8ff; color: #7e22ce; }
   .tag-all      { background: #e0f2fe; color: #0369a1; }
+
+  /* ── EXPENSE SUMMARY SECTION ─────────────────────────────── */
+  .expense-section {
+    max-width: 1100px; margin: 0 auto 40px; 
+  }
+  .expense-toggle {
+    width: 100%; padding: 16px 24px;
+    background: linear-gradient(135deg, #1e3a5f 0%, #0f766e 100%);
+    color: white; border: none; border-radius: 14px;
+    font-size: 16px; font-weight: 700; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15); letter-spacing: -0.3px;
+  }
+  .expense-toggle:hover { opacity: 0.92; }
+  .toggle-arrow { font-size: 14px; transition: transform 0.3s; }
+
+  #expensePanel {
+    background: white; border-radius: 0 0 14px 14px;
+    border: 1px solid #e2e8f0; border-top: none;
+    padding: 32px; box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+  }
+  .exp-intro {
+    background: #f8fafc; border-left: 4px solid #0f766e;
+    padding: 14px 18px; border-radius: 0 8px 8px 0; margin-bottom: 28px;
+    font-size: 14px; color: #374151; line-height: 1.6;
+  }
+
+  /* Hero stats */
+  .exp-hero-grid {
+    display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; margin-bottom: 32px;
+  }
+  @media(max-width:700px){ .exp-hero-grid { grid-template-columns: repeat(2,1fr); } }
+  .exp-hero-card {
+    background: #f8fafc; border: 1px solid #e2e8f0;
+    border-radius: 12px; padding: 18px; text-align: center;
+  }
+  .exp-hero-highlight { background: #0f766e; color: white; border-color: #0f766e; }
+  .exp-hero-highlight .exp-hero-num { color: white; }
+  .exp-hero-highlight .exp-hero-label { color: #ccfbf1; }
+  .exp-hero-highlight .exp-hero-sub { color: #a7f3d0; }
+  .exp-hero-num { font-size: 26px; font-weight: 800; color: #1e3a5f; letter-spacing: -1px; }
+  .exp-hero-label { font-size: 12px; font-weight: 700; color: #374151; margin: 4px 0 2px; text-transform: uppercase; letter-spacing: 0.5px; }
+  .exp-hero-sub { font-size: 11px; color: #64748b; }
+
+  /* Section titles */
+  .exp-section-title {
+    font-size: 15px; font-weight: 700; color: #1e3a5f;
+    border-bottom: 2px solid #e2e8f0; padding-bottom: 8px;
+    margin: 28px 0 16px; letter-spacing: -0.2px;
+  }
+
+  /* Destination bars */
+  .exp-dest-grid { display: flex; flex-direction: column; gap: 10px; margin-bottom: 8px; }
+  .exp-dest-row {
+    display: grid; grid-template-columns: 180px 1fr 80px 1fr;
+    align-items: center; gap: 12px; font-size: 13px;
+  }
+  @media(max-width:700px){
+    .exp-dest-row { grid-template-columns: 1fr 60px; }
+    .exp-bar-wrap, .exp-dest-note { display: none; }
+  }
+  .exp-dest-name { font-weight: 600; color: #1e293b; }
+  .exp-nights { font-size: 11px; font-weight: 400; color: #64748b; margin-left: 6px; }
+  .exp-bar-wrap { background: #f1f5f9; border-radius: 6px; height: 16px; overflow: hidden; }
+  .exp-bar { height: 100%; border-radius: 6px; background: #94a3b8; transition: width 0.5s; }
+  .exp-bar-seoul     { background: #f59e0b; }
+  .exp-bar-beijing   { background: #10b981; }
+  .exp-bar-shanghai  { background: #f97316; }
+  .exp-bar-guangzhou { background: #8b5cf6; }
+  .exp-bar-hk        { background: #06b6d4; }
+  .exp-bar-india     { background: #ef4444; }
+  .exp-bar-flights   { background: #3b82f6; }
+  .exp-dest-amt { font-weight: 700; color: #1e3a5f; text-align: right; }
+  .exp-dest-note { font-size: 12px; color: #64748b; }
+
+  /* Category cards */
+  .exp-cat-grid {
+    display: grid; grid-template-columns: repeat(5,1fr); gap: 12px; margin-bottom: 8px;
+  }
+  @media(max-width:900px){ .exp-cat-grid { grid-template-columns: repeat(2,1fr); } }
+  .exp-cat-card {
+    border-radius: 12px; padding: 16px; text-align: center;
+    border-top: 4px solid transparent;
+  }
+  .exp-cat-flights   { background: #eff6ff; border-top-color: #3b82f6; }
+  .exp-cat-hotels    { background: #f0fdf4; border-top-color: #10b981; }
+  .exp-cat-daily     { background: #fff7ed; border-top-color: #f97316; }
+  .exp-cat-experiences{ background: #fdf4ff; border-top-color: #a855f7; }
+  .exp-cat-other     { background: #f0f9ff; border-top-color: #0ea5e9; }
+  .exp-cat-icon { font-size: 22px; margin-bottom: 6px; }
+  .exp-cat-label { font-size: 12px; font-weight: 700; color: #1e293b; margin-bottom: 4px; }
+  .exp-cat-amt { font-size: 20px; font-weight: 800; color: #1e3a5f; letter-spacing: -0.5px; }
+  .exp-cat-pct { font-size: 11px; color: #64748b; margin: 2px 0 6px; }
+  .exp-cat-note { font-size: 11px; color: #475569; line-height: 1.4; }
+
+  /* Lessons */
+  .exp-lessons-grid { display: flex; flex-direction: column; gap: 14px; margin-bottom: 8px; }
+  .exp-lesson {
+    display: flex; gap: 16px; align-items: flex-start;
+    background: #f8fafc; border-radius: 10px; padding: 16px;
+    border: 1px solid #e2e8f0;
+  }
+  .exp-lesson-num {
+    font-size: 22px; font-weight: 900; color: #0f766e;
+    opacity: 0.35; flex-shrink: 0; width: 32px; line-height: 1;
+    font-family: Georgia, serif;
+  }
+  .exp-lesson-body { font-size: 13.5px; color: #374151; line-height: 1.6; }
+  .exp-lesson-body strong { color: #1e293b; }
+  .exp-lesson-body em { color: #0f766e; font-style: italic; }
+
+  /* Big picture */
+  .exp-big-picture {
+    background: linear-gradient(135deg, #1e3a5f 0%, #0f766e 100%);
+    border-radius: 14px; padding: 28px; color: white; margin-top: 28px;
+  }
+  .exp-bp-title { font-size: 18px; font-weight: 700; margin-bottom: 12px; }
+  .exp-bp-body { font-size: 14px; line-height: 1.8; color: #ccfbf1; }
+  .exp-bp-body strong { color: white; }
+  .exp-bp-body em { color: #a7f3d0; font-style: italic; }
 </style>
 </head>
 <body>
@@ -1640,6 +1760,192 @@
   })();
 </script>
 
+
+<!-- ══ TRIP EXPENSE SUMMARY ══════════════════════════════════════════════════ -->
+<div class="expense-section">
+  <button class="expense-toggle" onclick="toggleExpenses()" id="expToggleBtn">
+    💰 Trip Expense Summary — Educational Breakdown
+    <span class="toggle-arrow" id="expArrow">▼</span>
+  </button>
+
+  <div id="expensePanel" style="display:none">
+    <div class="exp-intro">
+      Every trip is a classroom. Below is an honest breakdown of what this family adventure cost — where money went, why, and what it teaches us. <strong>Natalia</strong>, these numbers are for you too. Understanding money in motion is one of the most important life skills there is.
+    </div>
+
+    <div class="exp-hero-grid">
+      <div class="exp-hero-card">
+        <div class="exp-hero-num">$16,079</div>
+        <div class="exp-hero-label">Pre-planned &amp; booked</div>
+        <div class="exp-hero-sub">Flights · Hotels · Big activities</div>
+      </div>
+      <div class="exp-hero-card">
+        <div class="exp-hero-num">$10,395</div>
+        <div class="exp-hero-label">On-ground card spend</div>
+        <div class="exp-hero-sub">Food · Transport · Shopping · Experiences</div>
+      </div>
+      <div class="exp-hero-card exp-hero-highlight">
+        <div class="exp-hero-num">~$26,000</div>
+        <div class="exp-hero-label">Estimated total trip cost</div>
+        <div class="exp-hero-sub">3 people · 20 days · 5 countries</div>
+      </div>
+      <div class="exp-hero-card">
+        <div class="exp-hero-num">~$433</div>
+        <div class="exp-hero-label">Per person, per day</div>
+        <div class="exp-hero-sub">All-in: flights, hotels, food, fun</div>
+      </div>
+    </div>
+
+    <div class="exp-section-title">📍 Card Spend by Destination</div>
+    <div class="exp-dest-grid">
+      <div class="exp-dest-row">
+        <div class="exp-dest-name">✈ Pre-trip / SFO</div>
+        <div class="exp-bar-wrap"><div class="exp-bar" style="width:2%"></div></div>
+        <div class="exp-dest-amt">$231</div>
+        <div class="exp-dest-note">Airport shopping, GeoBlue travel health insurance</div>
+      </div>
+      <div class="exp-dest-row">
+        <div class="exp-dest-name">🇰🇷 Seoul <span class="exp-nights">4 nights</span></div>
+        <div class="exp-bar-wrap"><div class="exp-bar exp-bar-seoul" style="width:5%"></div></div>
+        <div class="exp-dest-amt">$529</div>
+        <div class="exp-dest-note">$132/day — Kakao taxis, Olive Young, markets, dining</div>
+      </div>
+      <div class="exp-dest-row">
+        <div class="exp-dest-name">🇨🇳 Beijing <span class="exp-nights">3 nights</span></div>
+        <div class="exp-bar-wrap"><div class="exp-bar exp-bar-beijing" style="width:20%"></div></div>
+        <div class="exp-dest-amt">$2,041</div>
+        <div class="exp-dest-note">$680/day avg — includes $1,026 train ticket to Shanghai + Red Theater show</div>
+      </div>
+      <div class="exp-dest-row">
+        <div class="exp-dest-name">🇨🇳 Shanghai <span class="exp-nights">5 nights</span></div>
+        <div class="exp-bar-wrap"><div class="exp-bar exp-bar-shanghai" style="width:13%"></div></div>
+        <div class="exp-dest-amt">$1,341</div>
+        <div class="exp-dest-note">$268/day — Alipay food &amp; taxis, The Bund, Tianzifang, Romance Park</div>
+      </div>
+      <div class="exp-dest-row">
+        <div class="exp-dest-name">🇨🇳 Guangzhou <span class="exp-nights">4 nights</span></div>
+        <div class="exp-bar-wrap"><div class="exp-bar exp-bar-guangzhou" style="width:36%"></div></div>
+        <div class="exp-dest-amt">$3,688</div>
+        <div class="exp-dest-note">$922/day avg — Hilton hotel ($1,060), Chimelong, Carmen's fabric (business)</div>
+      </div>
+      <div class="exp-dest-row">
+        <div class="exp-dest-name">🇭🇰 Hong Kong <span class="exp-nights">transit</span></div>
+        <div class="exp-bar-wrap"><div class="exp-bar exp-bar-hk" style="width:0.5%"></div></div>
+        <div class="exp-dest-amt">$40</div>
+        <div class="exp-dest-note">Airport transit — Relay store, Starbucks</div>
+      </div>
+      <div class="exp-dest-row">
+        <div class="exp-dest-name">🇮🇳 India <span class="exp-nights">leg</span></div>
+        <div class="exp-bar-wrap"><div class="exp-bar exp-bar-india" style="width:3.5%"></div></div>
+        <div class="exp-dest-amt">$355</div>
+        <div class="exp-dest-note">Chennai Somerset hotel + IndiGo domestic flight</div>
+      </div>
+      <div class="exp-dest-row">
+        <div class="exp-dest-name">✈ Flights booked en route</div>
+        <div class="exp-bar-wrap"><div class="exp-bar exp-bar-flights" style="width:21%"></div></div>
+        <div class="exp-dest-amt">$2,170</div>
+        <div class="exp-dest-note">Cathay Pacific HKG→Chennai (Carmen) — booked Mar 18</div>
+      </div>
+    </div>
+
+    <div class="exp-section-title">🗂 How Was Money Spent? (Full Trip — All Categories)</div>
+    <div class="exp-cat-grid">
+      <div class="exp-cat-card exp-cat-flights">
+        <div class="exp-cat-icon">✈</div>
+        <div class="exp-cat-label">Flights</div>
+        <div class="exp-cat-amt">~$14,800</div>
+        <div class="exp-cat-pct">57% of total trip</div>
+        <div class="exp-cat-note">8 flight segments · PHX ↔ Seoul ↔ Beijing ↔ Shanghai ↔ Guangzhou ↔ HK ↔ Chennai ↔ PHX</div>
+      </div>
+      <div class="exp-cat-card exp-cat-hotels">
+        <div class="exp-cat-icon">🏨</div>
+        <div class="exp-cat-label">Hotels</div>
+        <div class="exp-cat-amt">~$5,400</div>
+        <div class="exp-cat-pct">21% of total trip</div>
+        <div class="exp-cat-note">Seoul Novotel · Grand Hyatt Beijing · Pudong Shangri-La · Guangzhou Hilton · Chennai Somerset</div>
+      </div>
+      <div class="exp-cat-card exp-cat-daily">
+        <div class="exp-cat-icon">🍜</div>
+        <div class="exp-cat-label">Food, Transport &amp; Daily</div>
+        <div class="exp-cat-amt">~$4,400</div>
+        <div class="exp-cat-pct">17% of total trip</div>
+        <div class="exp-cat-note">175+ Alipay &amp; WeChat payments · Kakao taxis · Street food · Restaurants · Metro</div>
+      </div>
+      <div class="exp-cat-card exp-cat-experiences">
+        <div class="exp-cat-icon">🎭</div>
+        <div class="exp-cat-label">Experiences</div>
+        <div class="exp-cat-amt">~$800</div>
+        <div class="exp-cat-pct">3% of total trip</div>
+        <div class="exp-cat-note">Red Theater · Romance Park · Great Wall · Chimelong · Cable car · Toboggan</div>
+      </div>
+      <div class="exp-cat-card exp-cat-other">
+        <div class="exp-cat-icon">🛡</div>
+        <div class="exp-cat-label">Insurance</div>
+        <div class="exp-cat-amt">$173</div>
+        <div class="exp-cat-pct">1% of total trip</div>
+        <div class="exp-cat-note">GeoBlue international health coverage · Covered the whole family</div>
+      </div>
+    </div>
+
+    <div class="exp-section-title">🎓 Money Lessons — For Natalia (and all of us)</div>
+    <div class="exp-lessons-grid">
+
+      <div class="exp-lesson">
+        <div class="exp-lesson-num">01</div>
+        <div class="exp-lesson-body">
+          <strong>Flights cost more than everything else combined.</strong> Of ~$26,000 total, more than half — ~$14,800 — was just getting from place to place. Flights are the single biggest variable in travel cost. Booking early, using miles, and choosing routes wisely changes everything. Dad used <em>33,900 miles + $114 for one flight</em> — that "free" flight took years of credit card points to earn. Points and miles are a real financial skill.
+        </div>
+      </div>
+
+      <div class="exp-lesson">
+        <div class="exp-lesson-num">02</div>
+        <div class="exp-lesson-body">
+          <strong>Seoul was our most affordable city — and one of the most fun.</strong> We spent $132/day in Seoul vs $922/day in Guangzhou. Seoul had incredible food, shopping, and culture at a fraction of the price. This is called <em>value</em> — not the cheapest, but the best experience per dollar spent. Price and quality don't always move together. Learning to find value is a superpower in life.
+        </div>
+      </div>
+
+      <div class="exp-lesson">
+        <div class="exp-lesson-num">03</div>
+        <div class="exp-lesson-body">
+          <strong>China runs on invisible money.</strong> We made 175+ Alipay and WeChat Pay transactions averaging $11 each. No cash, no card swipes — everything through a phone QR code. Hundreds of millions of people live this way daily. The world's payment systems are totally different from what we use at home. Understanding how money moves across borders and systems is a real 21st-century skill.
+        </div>
+      </div>
+
+      <div class="exp-lesson">
+        <div class="exp-lesson-num">04</div>
+        <div class="exp-lesson-body">
+          <strong>Not all spending is equal — some of it is investment.</strong> Several large Alipay payments in Guangzhou (including a $607 charge) were Mom buying fabric at the International Textile City. That's inventory for her business — a cost that will generate future income. <em>Business expenses are different from personal spending</em>, and many are tax-deductible. Knowing this difference is one of the foundations of financial literacy.
+        </div>
+      </div>
+
+      <div class="exp-lesson">
+        <div class="exp-lesson-num">05</div>
+        <div class="exp-lesson-body">
+          <strong>Experiences are the cheapest part — and the most priceless.</strong> All our activities combined — the toboggan down the Great Wall, Red Theater acrobatics, Romance Park, Chimelong — cost $800 total, just 3% of the trip. Yet those are what you'll remember 20 years from now. <em>Memory has the highest ROI of anything you can buy.</em> Spend money on doing things, not just having things.
+        </div>
+      </div>
+
+      <div class="exp-lesson">
+        <div class="exp-lesson-num">06</div>
+        <div class="exp-lesson-body">
+          <strong>Insurance is not optional when you travel internationally.</strong> GeoBlue cost $173 to cover all three of us. That's cheap peace of mind across 5 countries. One hospital visit abroad without insurance could cost more than the entire trip. Risk management — knowing what to protect yourself against and what it costs — is a core life skill. Never skip travel health coverage.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="exp-big-picture">
+      <div class="exp-bp-title">🌍 The Big Picture</div>
+      <div class="exp-bp-body">
+        This trip took <strong>Satya, Carmen, and Natalia</strong> across <strong>South Korea · China · Hong Kong · India</strong> — through megacities, ancient walls, textile markets, and family roots. It cost roughly <strong>$26,000</strong> — the price of a used car, a semester of college, or a year of rent in many cities.<br><br>
+        Was it worth it? Consider what was built: <em>perspective, cultural fluency, language exposure, family memory, and the deep understanding that the world is far larger, more complex, and more beautiful than any screen can show.</em><br><br>
+        <strong>That has no price tag.</strong>
+      </div>
+    </div>
+
+  </div><!-- /expensePanel -->
+</div><!-- /expense-section -->
+
 </div><!-- /page-content -->
 
 <script>
@@ -1676,6 +1982,19 @@ if (sessionStorage.getItem('trip-auth') === '1') { unlock(); }
 document.getElementById('pw-input').addEventListener('keydown', e => {
   if (e.key === 'Enter') checkPw();
 });
+
+
+function toggleExpenses() {
+  const panel = document.getElementById('expensePanel');
+  const arrow = document.getElementById('expArrow');
+  const btn   = document.getElementById('expToggleBtn');
+  const open  = panel.style.display === 'none' || panel.style.display === '';
+  panel.style.display = open ? 'block' : 'none';
+  arrow.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+  btn.style.borderRadius = open ? '14px 14px 0 0' : '14px';
+  if (open) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 </script>
 
 </body>
